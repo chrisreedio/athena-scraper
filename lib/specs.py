@@ -23,16 +23,11 @@ def fetchSpec(endpoint, category=None):
 		response = requests.get(url)
 		response.raise_for_status()  # This will raise an error for HTTP errors
 
-		# Extract the filename from the endpoint
-		# filename = endpoint.split('/')[-1] + '.json'
-		
-
 		# Parse and Format the JSON response
 		jsonResponse = response.json()
 		formattedJson = json.dumps(jsonResponse, indent=4)
 
-		# Save the content to a file
-		
+		# Save the content to a file		
 		if not os.path.exists(outputPath):
 			os.makedirs(outputPath)
 
@@ -40,7 +35,6 @@ def fetchSpec(endpoint, category=None):
 			file.write(formattedJson)
 
 		print(colored('✓', 'green'))
-		# print(f"Downloaded '{filename}' successfully.")
 
 	except requests.exceptions.HTTPError as err:
 		print(colored(f"HTTP Error: {err}", 'red'))

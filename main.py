@@ -5,7 +5,6 @@ from termcolor import colored
 
 def processLinks(driver):
 	categorySelector = '.nav-links__list__level-0-collapsible a[href*="/api/docs/"]'
-	# endpointSelector = '.nav-links__list__level-2 a[href*="/api/api-ref/"]'
 	endpointSelector = '.nav-links__list-item__active .nav-links__list__level-2 a[href*="/api/api-ref/"]'
 	categorySections = driver.find_elements(By.CSS_SELECTOR, categorySelector)
 	
@@ -15,11 +14,9 @@ def processLinks(driver):
 		print('\t' + colored(category, 'green'))
 
 	# Loop through the sections (Skipping the first one) and get the links
-	# for categorySection in categorySections[1:2]:
 	for categorySection in categorySections[1:]:
 		# Get the category name
 		categoryName = categorySection.get_attribute('href').split('/')[-1]
-		# print('Scanning Category: ' + categoryName)
 
 		# Click the category link
 		categorySection.click()
