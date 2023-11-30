@@ -4,7 +4,7 @@ import os
 from termcolor import colored
 
 baseUrl = "https://docs.athenahealth.com/v1/api/swagger/exploreDocs?urlAlias=/api-ref/"
-output_dir = 'specs/'
+output_dir = 'output/'
 
 def fetchSpec(endpoint, category=None):
 	"""

@@ -1,3 +1,4 @@
 *.pyc
-specs/**/*.json
+output/*
+!output/.gitkeep
 __pycache__

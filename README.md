@@ -12,7 +12,7 @@ python3 main.py
 
 ## Output
 
-This script will generate JSON files in the `specs` directory.
+This script will generate JSON files in the `output` directory.
 
 The JSON files will be named `'category'/'endpoint'.json`.
 
