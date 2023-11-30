@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 
 baseUrl = 'https://docs.athenahealth.com/api/docs/'
 
-def fetchLinks(url, handler):
+def browse(url, handler):
 	# Setup Selenium with a headless browser (no GUI)
 	options = Options()
 	chromePath = '/snap/bin/chromium.chromedriver'
@@ -18,7 +18,7 @@ def fetchLinks(url, handler):
 	driver = webdriver.Chrome(service=service, options=options)
 
 	# Open the page
-	print('Fetching links from: ' + baseUrl + url)
+	print('Browsing: ' + baseUrl + url)
 	driver.get(baseUrl + url)
 
 	# Wait for JavaScript to load
@@ -29,3 +29,4 @@ def fetchLinks(url, handler):
 
 	# Always remember to close the browser
 	driver.quit()
+

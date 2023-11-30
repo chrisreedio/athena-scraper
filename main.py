@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
-from lib.http import fetchLinks
+from lib.browser import browse
+from lib.specs import fetchSpec
 from termcolor import colored
 
 def processLinks(driver):
@@ -14,7 +15,7 @@ def processLinks(driver):
 		print('\t' + colored(category, 'green'))
 
 	# Loop through the sections (Skipping the first one) and get the links
-	for categorySection in categorySections[1:3]:
+	for categorySection in categorySections[1:2]:
 		# Get the category name
 		categoryName = categorySection.get_attribute('href').split('/')[-1]
 		# print('Scanning Category: ' + categoryName)
@@ -31,10 +32,13 @@ def processLinks(driver):
 	
 		endpoints = [link.get_attribute('href').split('/')[-1] for link in links if 'all-apis' not in link.get_attribute('href')]
 		print('\nFound %s endpoints in the %s category.' % (colored(str(len(endpoints)), 'cyan'), colored(categoryName, 'green')))
-		for endpoint in endpoints:
+		for endpoint in endpoints[:2]:
 			print('\t' + colored(endpoint, 'magenta'))
+			fetchSpec(endpoint)
+			# break # TODO - Remove this
 
 		# Click the category link again to collapse it
 		categorySection.click()
 
-fetchLinks('all-apis', processLinks)
+# Kick it off, fetch the 'root'
+browse('all-apis', processLinks)
