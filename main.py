@@ -15,7 +15,8 @@ def processLinks(driver):
 		print('\t' + colored(category, 'green'))
 
 	# Loop through the sections (Skipping the first one) and get the links
-	for categorySection in categorySections[1:2]:
+	# for categorySection in categorySections[1:2]:
+	for categorySection in categorySections[1:]:
 		# Get the category name
 		categoryName = categorySection.get_attribute('href').split('/')[-1]
 		# print('Scanning Category: ' + categoryName)
@@ -28,14 +29,12 @@ def processLinks(driver):
 
 		# Get all of the endpointSelector links inside the now open accordian
 		links = driver.find_elements(By.CSS_SELECTOR, endpointSelector)
-
 	
 		endpoints = [link.get_attribute('href').split('/')[-1] for link in links if 'all-apis' not in link.get_attribute('href')]
 		print('\nFound %s endpoints in the %s category.' % (colored(str(len(endpoints)), 'cyan'), colored(categoryName, 'green')))
-		for endpoint in endpoints[:2]:
-			print('\t' + colored(endpoint, 'magenta'))
-			fetchSpec(endpoint)
-			# break # TODO - Remove this
+		for endpoint in endpoints:
+			print('\t' + colored(endpoint, 'magenta'), end=': ')
+			fetchSpec(endpoint, categoryName)
 
 		# Click the category link again to collapse it
 		categorySection.click()
