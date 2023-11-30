@@ -1,53 +1,40 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from pprint import pprint
+from lib.http import fetchLinks
+from termcolor import colored
 
-baseUrl = 'https://docs.athenahealth.com/api/docs/'
+def processLinks(driver):
+	categorySelector = '.nav-links__list__level-0-collapsible a[href*="/api/docs/"]'
+	# endpointSelector = '.nav-links__list__level-2 a[href*="/api/api-ref/"]'
+	endpointSelector = '.nav-links__list-item__active .nav-links__list__level-2 a[href*="/api/api-ref/"]'
+	categorySections = driver.find_elements(By.CSS_SELECTOR, categorySelector)
+	
+	categories = [category.get_attribute('href').split('/')[-1] for category in categorySections if 'all-apis' not in category.get_attribute('href')]
+	print('Found %s categories.'% colored(str(len(categories)), 'cyan'))
+	for category in categories:
+		print('\t' + colored(category, 'green'))
 
-def fetchLinks(url, selector):
-	# Setup Selenium with a headless browser (no GUI)
-	options = Options()
-	chromePath = '/snap/bin/chromium.chromedriver'
-	options.add_argument("--headless")  # if you want the browser to be headless
-	options.add_argument("--no-sandbox")
-	options.add_argument("--disable-dev-shm-usage") #Replace with the path to your Chrome installation
-	options.headless = True
-	# Set up service with the path to the chromedriver
-	service = Service(executable_path=chromePath)
-	driver = webdriver.Chrome(service=service, options=options)
+	# Loop through the sections (Skipping the first one) and get the links
+	for categorySection in categorySections[1:3]:
+		# Get the category name
+		categoryName = categorySection.get_attribute('href').split('/')[-1]
+		# print('Scanning Category: ' + categoryName)
 
-	# Open the page
-	# driver.get('https://docs.athenahealth.com/api/docs/appointments')
-	print('Fetching links from: ' + baseUrl + url)
-	driver.get(baseUrl + url)
+		# Click the category link
+		categorySection.click()
 
-	# Wait for JavaScript to load
-	driver.implicitly_wait(10)  # You can adjust the wait time as needed
+		# Wait for the page to load
+		driver.implicitly_wait(10)  # You can adjust the wait time as needed
 
-	# Now you can find elements just like in BeautifulSoup
-	# links = driver.find_elements(By.CSS_SELECTOR, '.nav-links__list__level-2 a[href*="/api/api-ref/"]')
-	links = driver.find_elements(By.CSS_SELECTOR, selector)
+		# Get all of the endpointSelector links inside the now open accordian
+		links = driver.find_elements(By.CSS_SELECTOR, endpointSelector)
 
-	endpoints = [link.get_attribute('href').split('/')[-1] for link in links if 'all-apis' not in link.get_attribute('href')]
-	# pprint(endpoints)
+	
+		endpoints = [link.get_attribute('href').split('/')[-1] for link in links if 'all-apis' not in link.get_attribute('href')]
+		print('\nFound %s endpoints in the %s category.' % (colored(str(len(endpoints)), 'cyan'), colored(categoryName, 'green')))
+		for endpoint in endpoints:
+			print('\t' + colored(endpoint, 'magenta'))
 
-	# Always remember to close the browser
-	driver.quit()
+		# Click the category link again to collapse it
+		categorySection.click()
 
-	return endpoints
-
-apiCategories = fetchLinks('all-apis', '.nav-links__list__level-0-collapsible a[href*="/api/docs/"]')
-print('Found ' + str(len(apiCategories)) + ' categories.')
-pprint(apiCategories)
-print('=' * 50)
-for apiCategory in apiCategories:
-	print('Scanning Category: ' + apiCategory)
-	links = fetchLinks(apiCategory, '.nav-links__list-item__active .nav-links__list__level-2 a[href*="/api/api-ref/"]')
-	print('Found ' + str(len(links)) + ' endpoints.')
-	pprint(links)
-	break
-
-# links = fetchLinks('appointments', '.nav-links__list__level-2 a[href*="/api/api-ref/"]')
-# pprint(links)
+fetchLinks('all-apis', processLinks)
