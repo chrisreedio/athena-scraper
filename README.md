@@ -15,3 +15,11 @@ python3 main.py
 This script will generate JSON files in the `specs` directory.
 
 The JSON files will be named `'category'/'endpoint'.json`.
+
+## Dependencies
+
+-   Python 3.10.12+
+-   [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+-   [Requests](https://requests.readthedocs.io/en/master/)
+-   [Selenium](https://selenium-python.readthedocs.io/)
+-   [ChromeDriver](https://chromedriver.chromium.org/) - Tested in Ubuntu with Chromium
