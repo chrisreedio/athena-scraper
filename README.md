@@ -5,5 +5,5 @@ This is a simple script that scrapes the Athena API spec and generates a JSON fi
 ## Usage
 
 ```bash
-python3 scraper.py
+python3 main.py
 ```
