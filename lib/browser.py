@@ -6,6 +6,16 @@ from selenium.webdriver.chrome.options import Options
 baseUrl = 'https://docs.athenahealth.com/api/docs/'
 
 def browse(url, handler):
+	"""
+	Browse the specified URL using a headless browser and execute the provided handler.
+
+	Args:
+		url (str): The URL to browse.
+		handler (function): The callback/handler function to execute after browsing.
+
+	Returns:
+		None
+	"""
 	# Setup Selenium with a headless browser (no GUI)
 	options = Options()
 	chromePath = '/snap/bin/chromium.chromedriver'

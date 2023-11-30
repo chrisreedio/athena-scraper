@@ -7,6 +7,18 @@ baseUrl = "https://docs.athenahealth.com/v1/api/swagger/exploreDocs?urlAlias=/ap
 output_dir = 'specs/'
 
 def fetchSpec(endpoint, category=None):
+	"""
+	Fetches a specification from the given endpoint and saves it as a JSON file.
+
+	Args:
+		endpoint (str): The endpoint URL to fetch the specification from.
+		category (str, optional): The category of the specification. Defaults to None.
+
+	Returns:
+		None
+	"""
+	# Rest of the code...
+def fetchSpec(endpoint, category=None):
 	# Construct the full URL
 	url = f"{baseUrl}{endpoint}"
 	outputPath = os.path.join(output_dir, category or '')

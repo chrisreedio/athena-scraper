@@ -3,7 +3,7 @@ from lib.browser import browse
 from lib.specs import fetchSpec
 from termcolor import colored
 
-def processLinks(driver):
+def processCategories(driver):
 	categorySelector = '.nav-links__list__level-0-collapsible a[href*="/api/docs/"]'
 	endpointSelector = '.nav-links__list-item__active .nav-links__list__level-2 a[href*="/api/api-ref/"]'
 	categorySections = driver.find_elements(By.CSS_SELECTOR, categorySelector)
@@ -37,4 +37,4 @@ def processLinks(driver):
 		categorySection.click()
 
 # Kick it off, fetch the 'root'
-browse('all-apis', processLinks)
+browse('all-apis', processCategories)

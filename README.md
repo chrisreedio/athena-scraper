@@ -9,3 +9,9 @@ This is a simple script that scrapes the Athena API specs and generates a JSON f
 ```bash
 python3 main.py
 ```
+
+## Output
+
+This script will generate JSON files in the `specs` directory.
+
+The JSON files will be named `'category'/'endpoint'.json`.
