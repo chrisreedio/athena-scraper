@@ -1,2 +1,3 @@
 *.pyc
 specs/**/*.json
+__pycache__
